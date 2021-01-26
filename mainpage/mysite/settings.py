@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 EMAIL_HOST = 'smtp.gmail.com' 		 # 메일 호스트 서버
 EMAIL_PORT = '587' 			 # 서버 포트
 EMAIL_HOST_USER = 'snulecturesubtitle@gmail.com'
-EMAIL_HOST_PASSWORD = 'dlsrhdwlsmd'	
+EMAIL_HOST_PASSWORD = '***********'	
 EMAIL_USE_TLS = True			 # TLS 보안 설정
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
