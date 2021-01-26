@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Special Words to Shared Dictionary</h2>
+<br>
+<table class="table table-hover" title="It could take few days for &#10;Google Translation AI to learn new words">
+	<thead>
+		<tr bgcolor="DCDCDC" align="center">
+			<th>Korean</th>
+			<th>English</th>
+			<th>Dictionary</th>
+			<th>Created at</th>
+			<th> </th>
+		</th>
+	</thead>
+		<form method="POST" action="{% url 'wordset' %}">
+		{% csrf_token %}
+		<tr align="center">
+			<td><input style="border-radius:20px; height:40px; outline-style: none; border: 1px solid #999; padding-left: 15px" name="start" type="text" placeholder="Korean Word"></td>
+			<td><input style="border-radius:20px; height:40px; outline-style: none;  border: 1px solid #999; padding-left: 15px" name="arrive" type="text" placeholder="English Word"></td>
+			<td> <div class="fieldWrapper"> {{form.spec}}</div> </td>
+			<td></td>
+			<td>
+		<button class="btn btn-success" type="submit" style="border-radius: 20px" 
+			name="action" value="add">Add</button></td>
+		</tr>
+		</form>
+		{% for wordset in queryset %}
+		<tr valign="center" align="center">
+			<td>{{wordset.start}}</td>
+			<td>{{wordset.arrive}}</td>
+			<td>{{wordset.spec}}</td>
+			<td>{{wordset.created_at}}</td>
+			{% if wordset.created_by == user %}
+			<td><form method="POST" action="{% url "wordset-delete" wordset.pk %}">
+			{% csrf_token %}
+	    		    <button type="submit" name="action" value="del" style="border-radius: 15px">Delete</button></form></td>
+			{% else %}
+			<td> </td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+</table>
+{% endblock %}
