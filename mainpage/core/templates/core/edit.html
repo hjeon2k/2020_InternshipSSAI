@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Edit & Apply Subtitle</h2>
+<br>
+<form action="" method="POST">
+{% csrf_token %}
+<table class="table"width="100%" title="The subtitle number does not effects subtitle order&#10;Only the subtitle timestamp effects it">
+	<thead>
+		<tr border="0"bgcolor="white" align="center">
+			<th width="48%">Korean Subtitle</th>
+			<th width="4%"> </th>
+			<th width="48%">English Subtitle</th>
+		</tr>
+	</thead>
+	<tr>
+		<td align="right">
+		<textarea name="before"
+			      style="border-width:2px; border-color:#CDCDCD; border-radius:20px; padding:8px; width: 100%; height:350px" cols="20" rows="15" wrap="virtual">{{bf}}</textarea></td>
+		<td align="center" valign="center" title="Translate to English"><br><br><br><br><br><br>
+			<button class="btn btn-primary" type="submit" name="action" 
+				style=" border-radius:20px; margin:0px; font-size:16px; font-weight:bold;" value="trans">&#10140;</button><br><br>
+		</td>
+		<td>
+		<textarea name="after" 
+			      style="border-width:2px; border-color:#CDCDCD; border-radius:20px; padding:8px; width: 100%; height:350px" cols="20" rows="15" wrap="virtual">{{af}}</textarea></td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td align="center"> 
+			<button class="btn btn-success" type="submit" name="action"
+                                style="border-radius:20px; margin:0px; font-size:14px;" value="save">Save</button>
+		<td>
+		{%if video %}
+		<button class="btn btn-basic" type="submit" name="action"
+				style="border-radius:20px; background:#c9a951; color:white; font-size:15px;" value="render" title="It would take at maximum '5 times the length of the video'">Create Video with Current Subtitle</button>
+		{% endif %}
+		<a href="{% url 'home' %}" class="btn btn-basic"
+                                style="margin-left:40px; background:grey; color:white;border-radius:20px;font-size:15px;">Exit</td>
+		</td>
+	</tr>
+</table>
+</form>
+{% endblock %}

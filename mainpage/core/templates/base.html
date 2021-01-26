@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/static/snu.ico">
+    <title>Lecture Subtitle</title>
+    <link href="{% static 'bootstrap_min.css'%}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'base.css'%}" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white">Hello, {{user.username}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+	  <li class="nav-item">
+		  <a class="nav-link" href="{% url "logout" %}">Logout</a></li>
+          <li class="nav-item">
+		  <a class="nav-link" href="{% url 'home' %}">Main</a></li>
+	  <li class="nav-item">
+		  <a class="nav-link" href="{% url 'wordset' %}">Dictionary</a></li>
+	  {% if user.is_superuser %}
+	  <li class="nav-item">
+                  <a class="nav-link" href="{% url 'userlist' %}">Admin</a></li>
+	  {% endif %}
+        </ul>
+      </div>
+    </div>
+    </nav>
+
+    <main role="main" class="container" style="width:90%;">
+      
+{% block content %}
+{% endblock %}
+      
+    </main>
+    <div class="footer-custom">
+	    Please contact  <b>snussai@snu.ac.kr</b>  for help.
+
+	<a href="/static/User_manual.pdf"style="text-decoration:none;" download>
+   <br>Download User Manual</br>
+</a>
+   </div>
+  </body>
+</html>
+

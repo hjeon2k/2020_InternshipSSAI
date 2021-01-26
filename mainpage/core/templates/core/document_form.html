@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="table" style="width:100%" bgcolor="#f2f2f2" border="4" rules="none" bordercolor="#f2f2f2"
+	    title="Only .mp4 .mov .avi are accepted">
+    	<thead>
+		<tr bgcolor="#f2f2f2" align="left">
+			<th></th>
+			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upload</th>
+			<th> </th>
+		</tr>
+	</thead>
+	<tr align="center" valign="center" height="330px" bordercolor="#f2f2f2" bgcolor="#e6f2e1">
+		<td
+			title={{ form.file.help_text }}
+			><br><br><br><br><br>
+    <div class="fieldWrapper">
+	    {%if form.file.errors %}
+	    {{form.file.errors}}
+	    {%endif%}
+	    {{ form.file }}
+    </div>
+		</td>
+		<td><br><br><br><br><br>
+	<div class="fieldWrapper" style="margin-right:50px;">
+	    Dictionary &nbsp; : &nbsp;&nbsp; {{ form.spec }}
+		</td>
+		<td><br><br><br><br><br>
+	    <button type="submit" class="btn btn-success" 
+		style="margin:0px 20px 0px 0px;border-radius:20px; color:white;">Create Subtitle</button>
+			</div>
+		</td>
+	</tr>
+    </table>
+</form>
+<br><br><br>
+    <table class="table">
+        <thead>
+            <tr bgcolor="#DCDCDC" align="center">
+                <th align="left">Filename</th>
+                <th>Updated at</th>
+		<th>Dictionary</th>
+                <th align="center">Script(KO)</th>
+		<th align="center">Subtitle(EN)</th>
+		<th align="center">Video</th>
+		<th align="center"></th>
+		<th> </th>
+            </tr>
+        </thead>
+        {% for document in queryset %}
+	{%if document.deletewarn%}
+	<tr valign="center" align="center" bgcolor="#ebebeb">
+	{%else%}
+	<tr valign="center" align="center">
+	{%endif%}
+            <td>{{document.label}}</td>
+	    <td>{{document.created_at}}</td>
+	    <td>{{document.spec}}</td>
+
+	    <td align="center">{%if document.completed %}
+		    <a class="btn btn-basic" href="{{document.file0.url}}" style="background:grey; color:white; border-radius: 20px; font-weight:bolder" name="filepath" value="script" title="download">&#8675;</a>
+	    	{% else %}
+		{%if document.encoded%}
+		<a class="btn btn-basic" href="{{document.file0.url}}" style="background:grey; color:white; border-radius: 20px; font-weight:bolder" name="filepath" value="script" title=""disabled>&#8675;</a>
+		{%else%}
+                <img src="/static/loading.gif" title={{document.predictstr}}>
+		
+		{% endif %}
+		{%endif%}
+	    </td>
+
+	    <td align="center">{%if document.completed %}
+		    <a class="btn btn-basic" href="{{document.file.url}}" title="download"style="background:grey; color:white; border-radius: 20px; font-weight:bolder;" name="filepath" value="subtitle" >&#8675;</a>
+		{% else %}
+		{%if document.encoded%}
+		<a class="btn btn-basic" href="{{document.file0.url}}" style="background:grey; color:white; border-radius: 20px; font-weight:bolder" name="filepath" value="script"disabled>&#8675;</a>
+		{%else%}
+		<img src="/static/loading.gif" title={{document.predictstr}}>
+		{%endif%}
+		{%endif%}
+	    </td>
+	    
+	    <td align="center">
+	    {% if document.video %}
+	    {%if document.completed %}{%if document.encoded%}
+	    <a class="btn btn-basic" href="{{document.video.url}}" style="border-radius:20px; background:grey; color:white; font-weight:bolder" name="filepath" value="video">&#8675;</a>
+	    {%else%}
+	    <button type="button" class="btn btn-basic"style="background:#dedede; border-radius:20px; font-weight:bolder" title="Edit Subtitle to Download Video"disabled>&#8675;</button>
+	    {%endif%}
+	    {%else%}
+	    {%if document.encoded%}
+	    <img src="/static/loading.gif" title={{document.predictstr}}>
+	    {%else%}
+	    <button type="button" class="btn btn-basic"style="background:#dedede; border-radius:20px; font-weight:bolder" title="Edit Subtitle to Download Video"disabled>&#8675;</button>
+	    {%endif%}
+	    {%endif%}
+	    {%endif%}
+	    </td>
+
+	    <td align="center">
+	    {%if document.completed%}{%if document.video%}
+		<a href="{% url "videoedit" document.file.name %}" class="btn btn-basic" 
+			style="background:#bda14d; color:white; border-radius: 20px">Edit Subtitle</a>
+	    {% else %}
+	    <a href="{% url "audioedit" document.file.name %}" class="btn btn-basic" 
+			    style="background:#bda14d; color:white; border-radius: 20px">Edit Subtitle</a>
+	    {%endif%}
+	    {% else %}
+	    <button type="button" class="btn btn-basic"style="background:#dedede; border-radius:20px;"disabled>Edit Subtitle</button>
+	    {% endif %}
+	    </td>
+	    
+	    <td align="center">
+		    <form method="POST" action="{% url "document-delete" document.pk %}">
+	    {% csrf_token %}
+	    {%if document.completed%}
+	    <button type="submit" class="btn btn-basic" style="border-radius: 20px; color:white;background:#a86c6c;">Delete</button></form>
+	    {%else%}{%if document.encoded%}
+	    <button type="submit" class="btn btn-basic" style="border-radius: 20px; color:white;background:#a86c6c;">Delete</button></form>
+    	    {%else%}
+	    <button type="submit" class="btn btn-basic" style="border-radius: 20px; color:white;background:#a86c6c;">Cancel</button></form>
+    		{%endif%}
+		{%endif%}
+	    </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+
