@@ -1,0 +1,42 @@
+/* Show it's not fixed to the top */
+body {
+  min-height: 75rem;
+}
+
+.footer-custom {
+   width:100%;
+   height:60px;
+   position:fixed;
+   bottom:0;
+   background:white;
+   text-align: center;
+   color: grey;
+}
+
+ 
+
+.td .tooltip-custom {
+  display: none;
+  html:True;
+  animation: tooltipAni 1s;
+  transition: opacity 0.5s;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: #fff;
+}
+.td:hover .tooltip-custom {
+  display: block;
+}
+
+@ keyframes tooltipAni {
+  0% {
+    opacity: 0;
+  }
+  80 {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
