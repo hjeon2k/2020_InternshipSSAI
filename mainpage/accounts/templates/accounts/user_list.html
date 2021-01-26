@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Approve the Faculty Users</h2><br>
+    <table class="table">
+        <thead>
+            <tr bgcolor="#DCDCDC" align="center">
+                <th>Email Account</th>
+                <th>Joined Date</th>
+                <th>State</th>
+		<th> </th>
+		<th> </th>
+            </tr>
+	</thead>
+        {% for query in object_list %}
+            <tr valign="center" align="center">
+            <td>{{query.email}}</td>
+            <td>{{query.date_joined}}</td>
+	    <td>{% if query.is_superuser %}Admin
+		    {% else %}
+		    {% if query.groups.all %}Approved
+		    {% else %}Unknown{% endif %}{% endif %}</td>
+	    <td>{% if not query.is_superuser %}
+		    <form method="POST" action="{% url "user-approve" query.username %}">
+                        {% csrf_token %}
+			{%if not query.groups.all %}
+		    <button class="btn btn-success" type="submit" style="border-radius: 20px"
+			  name="action" value="approve">Approve</button></form></td>
+	    {% else %}
+	    		<button class="btn btn-danger" type="submit" style="border-radius: 20px"
+                          name="action" value="approve">Disapprove</button></form></td>
+  		{%endif%}
+	    {% endif %}
+	    </td>
+	    <td>{% if not query.is_superuser %}{% if not query.groups.all %}
+		    <form method="POST" action="{% url "user-delete" query.username %}">
+                        {% csrf_token %}
+		    <button class="btn btn-danger" type="submit" style="border-radius: 20px"
+			 name="action" value="delete">Delete</button></form></td>
+	    {% endif %}{% endif %}
+	    </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

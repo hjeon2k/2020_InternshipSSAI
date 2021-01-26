@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>َSignup</title>
+    <link rel="icon" href="/static/snu.ico">
+    <link href="{% static 'signup.css'%}" rel="stylesheet">
+  </head>
+
+<body>
+
+<form class="box" action="{% url 'signup'%}" method="POST">
+  {% csrf_token %}
+  {% if error %}
+  <p>{{error}}</p>
+  {% endif %}
+  <h1>Sign up</h1>
+
+  <input type="text" name="username" placeholder="SNU Account ID" style="margin:20px auto">
+  <input name="password1" type="password" placeholder="Password">
+  <input name="password2" type="password" placeholder="Confirm Password">
+  
+  <input type="submit" value="Signup"  style="width:220px">
+  <br><br>
+  <a href="{% url 'login' %}" style="text-decoration:none; color:#52BE80; font-weight:bold;">Login </a>&nbsp;|&nbsp;
+  <a href="{% url 'findchangepw' %}" style="text-decoration:none; color:#808080; font-size:14px"> Forgot Password</a>
+
+</form>
+
+  </body>
+
+</html>

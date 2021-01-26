@@ -1,0 +1,13 @@
+
+
+Dear {{user.username}}
+안녕하세요, {{user.username}} 님
+
+Please click the next link and validate your account: https://{{domain}}{% url 'activate' uid token %}
+다음 링크를 클릭하여 계정을 활성화하세요: https://{{domain}}{% url 'activate' uid token %}
+
+Once your account is approved, you would get Approved email. It could take from a few hours to a day.
+귀하의 계정이 승인 되면, 승인 안내 메일을 받으실 수 있습니다. 이는 몇 시간에서 하루 정도 소요될 수 있습니다.
+
+Thank you.
+감사합니다.

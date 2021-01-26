@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>َFind/Change Password</title>
+    <link rel="icon" href="/static/snu.ico">
+    <link href="{% static 'findchangepw.css'%}" rel="stylesheet">
+  </head>
+
+<body>
+
+<form style="width:350px"class="box" action="{% url 'findchangepw'%}" method="POST">
+  {% csrf_token %}
+  {% if error %}
+  <p>{{error}}</p>
+  {% endif %}
+  <h1>Send Email with<br>Temporary password</h1>
+	<br>
+  <input type="text" name="username" placeholder="SNU Account ID" style="border:3px solid #FFE4E1">
+  
+  <input type="submit" name='getnew' value="Send Email">
+  <br>
+    <a href="{% url 'login' %}" style="text-decoration:none; color:#52BE80; font-weight:bold;">Login </a>&nbsp;|&nbsp;
+  <a href="{% url 'signup' %}" style="text-decoration:none; color:#6495ED; font-weight:bold;"> Sign up</a>
+
+
+</form>
+
+  </body>
+
+</html>

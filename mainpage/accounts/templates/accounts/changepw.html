@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title>َChange Password</title>
+    <link rel="icon" href="/static/snu.ico">
+    <link href="{% static 'findchangepw.css'%}" rel="stylesheet">
+  </head>
+
+<body>
+
+<form class="box" action="{% url 'changepw'%}" method="POST">
+  {% csrf_token %}
+  {% if error %}
+  <p>{{error}}</p>
+  {% endif %}
+  <h1>Change Password</h1>
+
+  <input type="text" name="username" placeholder="SNU Account ID" style="border:3px solid #FFE4E1">
+  <input name="password0" type="password" placeholder="Temporary password">
+  <input name="password1" type="password" placeholder="New Password">
+  <input name="password2" type="password" placeholder="Confirm New Password">
+
+  <input type="submit" name='setnew' value="Change PW" style="background:grey">
+
+</form>
+
+  </body>
+
+</html>
